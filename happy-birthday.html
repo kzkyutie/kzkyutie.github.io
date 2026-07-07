@@ -176,6 +176,42 @@
         .photo-grid img:nth-child(even) { transform: rotate(0.5deg); }
         .photo-grid img:nth-child(3n)   { transform: rotate(0deg); }
 
+        /* ---- Bouquet: caption on the left, photo on the right ---- */
+        .bouquet-section {
+            width: 100%;
+            max-width: min(1500px, 98vw);
+            margin-top: clamp(40px, 10vh, 90px);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(20px, 4vw, 40px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .bouquet-caption {
+            font-family: "Lucida Handwriting", cursive;
+            color: #8b0000;
+            text-align: center;
+            font-size: clamp(2.2rem, 7vw, 6rem);
+            line-height: 1;
+            margin: 0;
+            max-width: min(400px, 90vw);
+        }
+
+        .bouquet-img-wrap {
+            max-width: min(800px, 100vw);
+            margin-left: clamp(16px, 3vw, 36px);
+            transform: rotate(-6deg);
+        }
+
+        .bouquet-img-wrap img {
+            width: 100%;
+            display: block;
+            filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.22));
+        }
+
         /* ---- Subtle background decor: balloons + party poppers ----
            Fixed, low-opacity, pointer-events:none so they never
            interfere with clicks or the layout — purely decorative. */
@@ -202,22 +238,20 @@
             animation: float 7s ease-in-out infinite;
         }
 
-        /* keep the actual content above the decor layer */
-        .hero, .gallery { position: relative; z-index: 1; }
+        .hero, .gallery, .cake-section, .bouquet-section { position: relative; z-index: 1; }
 
-        /* ---- magical entrance, continues the light burst from the gift page ---- */
         .entrance-overlay {
             position: fixed;
             inset: 0;
             z-index: 60;
             pointer-events: none;
-            background: radial-gradient(circle at 50% 35%,
+            background: radial-gradient(circle at var(--entry-x, 50%) var(--entry-y, 35%),
                 #fff6da 0%, #ffe9b8 25%, #f9f3e3 55%, #f9f3e3 100%);
-            clip-path: circle(150% at 50% 35%);
+            clip-path: circle(150% at var(--entry-x, 50%) var(--entry-y, 35%));
             transition: clip-path 1.1s cubic-bezier(.45, 0, .2, 1);
         }
         .entrance-overlay.reveal {
-            clip-path: circle(0% at 50% 35%);
+            clip-path: circle(0% at var(--entry-x, 50%) var(--entry-y, 35%));
         }
 
         .hero, .gallery {
@@ -249,6 +283,48 @@
         @keyframes bob {
             0%, 100% { transform: translate(-50%, 0); }
             50%      { transform: translate(-50%, 6px); }
+        }
+
+        /* ---- Birthday cake, full-screen intro before the letter ---- */
+        .cake-section {
+            width: 100%;
+            min-height: 100vh;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(4px, 1vh, 10px);
+            padding: clamp(16px, 4vh, 30px) clamp(10px, 4vw, 30px);
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+        }
+        .cake-section.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cake-heading {
+            font-family: "Lucida Handwriting", cursive;
+            color: #8b0000;
+            text-align: center;
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            line-height: 1;
+            margin: clamp(100px, 22vh, 220px) 0 0;
+        }
+
+        .cake-wrap {
+            width: min(1600px, 80vw);
+            margin: -60px auto 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .flame {
+            transform-box: fill-box;
         }
     </style>
 </head>
@@ -355,14 +431,29 @@
         </svg>
     </div>
 
+    <div class="cake-section">
+        <h2 class="cake-heading">Happy 21st Birthday</h2>
+        <div class="cake-wrap">
+<svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto;">
+    <ellipse cx="300" cy="300" rx="230" ry="16" fill="#000000" opacity="0.15"/>
+    <rect x="100" y="190" width="400" height="100" rx="14" fill="#550101"/>
+    <circle cx="210.9" cy="242.7" r="6" fill="#000000" opacity="0.35"/><circle cx="255.8" cy="246.2" r="6" fill="#000000" opacity="0.35"/><circle cx="342.7" cy="213.9" r="6" fill="#000000" opacity="0.35"/><circle cx="134.5" cy="260.2" r="6" fill="#000000" opacity="0.35"/><circle cx="218.2" cy="224.1" r="6" fill="#000000" opacity="0.35"/><circle cx="468.5" cy="238.2" r="6" fill="#000000" opacity="0.35"/><circle cx="414.4" cy="238.6" r="6" fill="#000000" opacity="0.35"/><circle cx="347.3" cy="219.0" r="6" fill="#000000" opacity="0.35"/><circle cx="345.9" cy="262.1" r="6" fill="#000000" opacity="0.35"/><circle cx="307.9" cy="254.5" r="6" fill="#000000" opacity="0.35"/>
+    <rect x="100" y="170" width="400" height="24" rx="10" fill="#ffffff"/>
+    <circle cx="120" cy="192" r="9" fill="#ffffff"/><circle cx="148" cy="192" r="9" fill="#ffffff"/><circle cx="176" cy="192" r="9" fill="#ffffff"/><circle cx="204" cy="192" r="9" fill="#ffffff"/><circle cx="232" cy="192" r="9" fill="#ffffff"/><circle cx="260" cy="192" r="9" fill="#ffffff"/><circle cx="288" cy="192" r="9" fill="#ffffff"/><circle cx="316" cy="192" r="9" fill="#ffffff"/><circle cx="344" cy="192" r="9" fill="#ffffff"/><circle cx="372" cy="192" r="9" fill="#ffffff"/><circle cx="400" cy="192" r="9" fill="#ffffff"/><circle cx="428" cy="192" r="9" fill="#ffffff"/><circle cx="456" cy="192" r="9" fill="#ffffff"/><circle cx="484" cy="192" r="9" fill="#ffffff"/>
+    <rect x="128.0" y="120" width="6" height="50" fill="#000000"/><rect x="128.0" y="140" width="6" height="6" fill="#550101"/><rect x="144.8" y="120" width="6" height="50" fill="#000000"/><rect x="144.8" y="140" width="6" height="6" fill="#550101"/><rect x="161.6" y="120" width="6" height="50" fill="#000000"/><rect x="161.6" y="140" width="6" height="6" fill="#550101"/><rect x="178.4" y="120" width="6" height="50" fill="#000000"/><rect x="178.4" y="140" width="6" height="6" fill="#550101"/><rect x="195.2" y="120" width="6" height="50" fill="#000000"/><rect x="195.2" y="140" width="6" height="6" fill="#550101"/><rect x="212.0" y="120" width="6" height="50" fill="#000000"/><rect x="212.0" y="140" width="6" height="6" fill="#550101"/><rect x="228.8" y="120" width="6" height="50" fill="#000000"/><rect x="228.8" y="140" width="6" height="6" fill="#550101"/><rect x="245.6" y="120" width="6" height="50" fill="#000000"/><rect x="245.6" y="140" width="6" height="6" fill="#550101"/><rect x="262.4" y="120" width="6" height="50" fill="#000000"/><rect x="262.4" y="140" width="6" height="6" fill="#550101"/><rect x="279.2" y="120" width="6" height="50" fill="#000000"/><rect x="279.2" y="140" width="6" height="6" fill="#550101"/><rect x="296.0" y="120" width="6" height="50" fill="#000000"/><rect x="296.0" y="140" width="6" height="6" fill="#550101"/><rect x="312.8" y="120" width="6" height="50" fill="#000000"/><rect x="312.8" y="140" width="6" height="6" fill="#550101"/><rect x="329.6" y="120" width="6" height="50" fill="#000000"/><rect x="329.6" y="140" width="6" height="6" fill="#550101"/><rect x="346.4" y="120" width="6" height="50" fill="#000000"/><rect x="346.4" y="140" width="6" height="6" fill="#550101"/><rect x="363.2" y="120" width="6" height="50" fill="#000000"/><rect x="363.2" y="140" width="6" height="6" fill="#550101"/><rect x="380.0" y="120" width="6" height="50" fill="#000000"/><rect x="380.0" y="140" width="6" height="6" fill="#550101"/><rect x="396.8" y="120" width="6" height="50" fill="#000000"/><rect x="396.8" y="140" width="6" height="6" fill="#550101"/><rect x="413.6" y="120" width="6" height="50" fill="#000000"/><rect x="413.6" y="140" width="6" height="6" fill="#550101"/><rect x="430.4" y="120" width="6" height="50" fill="#000000"/><rect x="430.4" y="140" width="6" height="6" fill="#550101"/><rect x="447.2" y="120" width="6" height="50" fill="#000000"/><rect x="447.2" y="140" width="6" height="6" fill="#550101"/><rect x="464.0" y="120" width="6" height="50" fill="#000000"/><rect x="464.0" y="140" width="6" height="6" fill="#550101"/>
+    <g class="flame" style="transform-origin:131.0px 112px; animation-delay:0.00s;"><ellipse cx="131.0" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="131.0" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:147.8px 112px; animation-delay:0.15s;"><ellipse cx="147.8" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="147.8" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:164.6px 112px; animation-delay:0.30s;"><ellipse cx="164.6" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="164.6" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:181.4px 112px; animation-delay:0.45s;"><ellipse cx="181.4" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="181.4" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:198.2px 112px; animation-delay:0.60s;"><ellipse cx="198.2" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="198.2" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:215.0px 112px; animation-delay:0.00s;"><ellipse cx="215.0" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="215.0" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:231.8px 112px; animation-delay:0.15s;"><ellipse cx="231.8" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="231.8" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:248.6px 112px; animation-delay:0.30s;"><ellipse cx="248.6" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="248.6" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:265.4px 112px; animation-delay:0.45s;"><ellipse cx="265.4" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="265.4" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:282.2px 112px; animation-delay:0.60s;"><ellipse cx="282.2" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="282.2" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:299.0px 112px; animation-delay:0.00s;"><ellipse cx="299.0" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="299.0" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:315.8px 112px; animation-delay:0.15s;"><ellipse cx="315.8" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="315.8" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:332.6px 112px; animation-delay:0.30s;"><ellipse cx="332.6" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="332.6" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:349.4px 112px; animation-delay:0.45s;"><ellipse cx="349.4" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="349.4" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:366.2px 112px; animation-delay:0.60s;"><ellipse cx="366.2" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="366.2" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:383.0px 112px; animation-delay:0.00s;"><ellipse cx="383.0" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="383.0" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:399.8px 112px; animation-delay:0.15s;"><ellipse cx="399.8" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="399.8" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:416.6px 112px; animation-delay:0.30s;"><ellipse cx="416.6" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="416.6" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:433.4px 112px; animation-delay:0.45s;"><ellipse cx="433.4" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="433.4" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:450.2px 112px; animation-delay:0.60s;"><ellipse cx="450.2" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="450.2" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g><g class="flame" style="transform-origin:467.0px 112px; animation-delay:0.00s;"><ellipse cx="467.0" cy="112" rx="5" ry="9" fill="#ffb400"/><ellipse cx="467.0" cy="114" rx="2.4" ry="5" fill="#fff4c2"/></g>
+</svg>
+        </div>
+    </div>
+
     <div class="hero">
         <div class="envelope-stack">
             <div class="envelope">
                 <div class="letter">
-                    <p>Happy Birthday my Love! May this little special gift make your day a bit better,
-                        We may not be with each other physically to celebrate our birthdays but just know 
-                        that even so, You are always in my thoughts. I am so happy that I am dating such a 
-                        wonderful person! 
+                    <p>Happy Birthday, my love! May this little gift make your day even brighter. 
+                        Though we may not be physically together to celebrate our birthdays, 
+                        please know that you are always in my thoughts. I feel so blessed to 
+                        be with such a wonderful person, and I’m truly happy to be dating you!
                     </p>
                     <p>I WUV U BEBI</p>
                 </div>
@@ -401,6 +492,13 @@
         </div>
     </div>
 
+    <div class="bouquet-section">
+        <p class="bouquet-caption">Flowers for my precious bebi</p>
+        <div class="bouquet-img-wrap">
+            <img src="Bokek.png" alt="A bouquet made for you">
+        </div>
+    </div>
+
     <script>
         const envStack = document.querySelector(".envelope-stack");
         const heart = document.querySelector(".heart");
@@ -410,12 +508,25 @@
 
         window.addEventListener('load', () => {
             const overlay = document.getElementById('entranceOverlay');
+            const cake = document.querySelector('.cake-section');
             const hero = document.querySelector('.hero');
             const gallery = document.querySelector('.gallery');
+
+    
+            const originX = sessionStorage.getItem('giftOriginX');
+            const originY = sessionStorage.getItem('giftOriginY');
+            if (originX && originY) {
+                document.documentElement.style.setProperty('--entry-x', originX);
+                document.documentElement.style.setProperty('--entry-y', originY);
+                sessionStorage.removeItem('giftOriginX');
+                sessionStorage.removeItem('giftOriginY');
+            }
+
             requestAnimationFrame(() => {
                 overlay.classList.add('reveal');
-                setTimeout(() => hero.classList.add('show'), 250);
-                setTimeout(() => gallery.classList.add('show'), 550);
+                setTimeout(() => cake.classList.add('show'), 250);
+                setTimeout(() => hero.classList.add('show'), 450);
+                setTimeout(() => gallery.classList.add('show'), 650);
                 setTimeout(() => overlay.remove(), 1300);
             });
         });
